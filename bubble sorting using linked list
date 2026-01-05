@@ -1,0 +1,87 @@
+#include <iostream>
+using namespace std;
+
+struct Node
+{
+    int salary;
+    Node* next;
+};
+void insert(Node*& head, int value)
+{
+    Node* newNode = new Node();
+    newNode->salary = value;
+    newNode->next = NULL;
+
+    if (head == NULL)
+    {
+        head = newNode;
+        return;
+    }
+
+    Node* temp = head;
+    while (temp->next != NULL)
+        temp = temp->next;
+
+    temp->next = newNode;
+}
+void bubbleSort(Node* head)
+{
+    if (head == NULL)
+        return;
+
+    bool swapped;
+    Node* ptr1;
+    Node* lptr = NULL;
+
+    do
+    {
+        swapped = false;
+        ptr1 = head;
+
+        while (ptr1->next != lptr)
+        {
+            if (ptr1->salary > ptr1->next->salary)
+            {
+                int temp = ptr1->salary;
+                ptr1->salary = ptr1->next->salary;
+                ptr1->next->salary = temp;
+                swapped = true;
+            }
+            ptr1 = ptr1->next;
+        }
+        lptr = ptr1;
+
+    } while (swapped);
+}
+
+void display(Node* head)
+{
+    Node* temp = head;
+    while (temp != NULL)
+    {
+        cout << temp->salary << " ";
+        temp = temp->next;
+    }
+    cout << endl;
+}
+
+int main()
+{
+    Node* head = NULL;
+
+    int salary[10] = {48000, 35000, 62000, 29000, 71000,
+                      33000, 54000, 39000, 46000, 58000};
+
+    for (int i = 0; i < 10; i++)
+        insert(head, salary[i]);
+
+    cout << "Before Sorting:\n";
+    display(head);
+
+    bubbleSort(head);
+
+    cout << "\nAfter Bubble Sort (Ascending Order):\n";
+    display(head);
+
+    return 0;
+}
